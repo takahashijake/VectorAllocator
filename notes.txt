@@ -1,0 +1,13 @@
+Lessons Learned For When Working with std::allocator: 
+1. Even if you do not construct objects in every byte of 
+memory you allocated, you still have to call 
+.deallocate() for every byte of memory you allocated 
+2. You can still call new and delete internally in a custom
+struct/class's constructor/deconstructor because when you 
+call .destroy(), you are handling the internal dynamic memory 
+of the object. .deallocate() handles the external dynamic memory
+allocated for the object itself
+3. Using std::allocator in general is very risky because 
+it requires you to be razor precise with memory management. 
+You have to manually call .deallocate() for every single object
+you allocate with .allocate();
